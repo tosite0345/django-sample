@@ -1,6 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.contrib.auth import login
+from django.urls import reverse_lazy
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic.edit import CreateView
 
 from .models import Task
 
@@ -39,3 +43,14 @@ def update(request, task_id):
 def delete(request, task_id):
     Task.objects.get(pk=task_id).delete()
     return redirect(request.META['HTTP_REFERER'])
+
+class SignUp(CreateView):
+    form_class = UserCreationForm
+    template_name = 'registration/signup.html'
+    success_url = '/todo/'
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        self.object = user
+        return redirect(self.get_success_url())

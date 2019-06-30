@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br><br>
+<h1 class="header center orange-text">Login Form</h1>
+<div class="row center card">
+  <form method="post" action="{% url 'login' %}" class="card-content">
+    {% csrf_token %}
+    <div class="row">
+      <div class="input-field col s12">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        {{ form.password.label_tag }}
+        {{ form.password }}
+      </div>
+    </div>
+
+    <div class="row">
+      <input type="submit" class="btn" value="login">
+      <input type="hidden" name="next" value="{{ next }}">
+    </div>
+
+  </form>
+</div>
+{% endblock %}
