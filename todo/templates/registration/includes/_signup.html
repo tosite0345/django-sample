@@ -1,20 +1,16 @@
 <div class="row">
+  {% for field in form %}
   <div class="input-field col s12">
-    {{ form.username.label_tag }}
-    {{ form.username }}
+    {{ field.label_tag }}
+    {{ field }}
+    {% if field.errors %}
+      <ul class="left-align">
+      {% for error in field.errors %}
+        <li class="helper-text" data-error="wrong">{{ error|safe }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
   </div>
-</div>
+  {% endfor %}
 
-<div class="row">
-  <div class="input-field col s12">
-    {{ form.password1.label_tag }}
-    {{ form.password1 }}
-  </div>
-</div>
-
-<div class="row">
-  <div class="input-field col s12">
-    {{ form.password2.label_tag }}
-    {{ form.password2 }}
-  </div>
 </div>
