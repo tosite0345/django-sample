@@ -6,27 +6,7 @@
 <div class="row center card">
   <form method="post" action="{% url 'signup' %}" class="card-content">
     {% csrf_token %}
-
-    <div class="row">
-      <div class="input-field col s12">
-        {{ form.username.label_tag }}
-        {{ form.username }}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="input-field col s12">
-        {{ form.password1.label_tag }}
-        {{ form.password1 }}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="input-field col s12">
-        {{ form.password2.label_tag }}
-        {{ form.password2 }}
-      </div>
-    </div>
+    {% include './includes/_signup.html' %}
 
     <div class="row">
       <input type="submit" class="btn" value="sign up">
