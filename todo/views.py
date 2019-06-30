@@ -16,7 +16,7 @@ def sample_view(request):
     return render(request, 'todo/sample.html', context)
 
 def index(request):
-    context = { 'tasks': Task.objects.all }
+    context = { 'tasks': Task.objects.filter(user_id=request.user.id) }
     return render(request, 'todo/index.html', context)
 
 def new(request):
@@ -25,11 +25,15 @@ def new(request):
 
 def create(request):
     p = request.POST
-    task = Task.objects.create(name=p['name'], state=p['state'])
+    task = Task.objects.create(user_id=request.user.id, name=p['name'], state=p['state'])
     return redirect('/todo')
 
 def edit(request, task_id):
-    context = { 'task': Task.objects.get(pk=task_id) }
+    task = Task.objects.filter(pk=task_id, user_id=request.user.id)
+    context = { 'task': task }
+
+    if task.count() == 0:
+        return redirect('/todo')
     return render(request, 'todo/edit.html', context)
 
 def update(request, task_id):
